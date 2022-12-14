@@ -15,6 +15,7 @@ const main = async () => {
     let accountsBefore = [];
     let accountsBeforeCount = 0;
     let last_key = "";
+    console.log("Getting accounts before.");
 
     while (true) {
         
@@ -39,6 +40,8 @@ const main = async () => {
     let accountsAfter = [];
     let last_key1 = "";
     let accountsAfterCount = 0;
+    console.log("Getting accounts after.");
+
     while (true) {
         
         process.stdout.write("downloading accounts data...\r");
@@ -80,19 +83,19 @@ for (var i = 0; i < count; i++) {
 let reserve_difference = accountsAfter[i].reserved_balance - accountsBefore[i].reserved_balance;
 let free_difference = accountsAfter[i].free_balance - accountsBefore[i].free_balance;
 let cond_a = free_difference == reserve_difference;
-let max_misc = max(accountsBefore[i].miscFrozen, reserve_difference);
+let max_misc = Math.max(accountsBefore[i].miscFrozen, reserve_difference);
 let cond_b = accountsAfter[i].miscFrozen == max_misc;
-let max_fee = max(accountsBefore[i].feeFrozen, reserve_difference);
+let max_fee = Math.max(accountsBefore[i].feeFrozen, reserve_difference);
 let cond_c = accountsAfter[i].feeFrozen == max_fee;
-let max_misc_fee = max(accountsAfter[i].miscFrozen, accountsAfter[i].feeFrozen);
+let max_misc_fee = Math.max(accountsAfter[i].miscFrozen, accountsAfter[i].feeFrozen);
 let cond_d = accountsAfter[i].free > max_misc_fee;
 
 if (cond_a || cond_b || cond_c || cond_d) {
-let res = "" + account_id 
+let res = "" + accountsAfter[i].account_id 
 + cond_a ? "cond_a" : "" 
 + cond_b ? "cond_b" : "" 
 + cond_c ?  "cond_c" : ""
- + cond_d ? "cond_c" : "";
+ + cond_d ? "cond_d" : "";
 console.log(res);
 }
 
